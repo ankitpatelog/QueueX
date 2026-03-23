@@ -29,8 +29,9 @@ class UserManager(BaseUserManager):
 class User(AbstractUser,PermissionsMixin):
     # core identity
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,blank=False,null=False)
     username = models.CharField(max_length=30, unique=True)
+    password = models.CharField(max_length=128,blank=False,null=False)
     
     # profile
     first_name = models.CharField(max_length=30, blank=True)
@@ -40,7 +41,7 @@ class User(AbstractUser,PermissionsMixin):
     
     # roles
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     
     USERNAME_FIELD = 'email'
@@ -82,3 +83,4 @@ class User(AbstractUser,PermissionsMixin):
     def __str__(self):
         return self.email
     
+
